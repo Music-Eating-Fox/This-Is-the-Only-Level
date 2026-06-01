@@ -48,9 +48,9 @@ onEnterFrame = function() {
     afw._x -= 0.3 * ((afw._x - _root["b" + _loc2_]._x) / 2);
     afw._y -= 0.3 * ((afw._y - _root["b" + _loc2_]._y) / 2);
 
-    cat.removeMovieClip();
-    createEmptyMovieClip("cat", k++);
-    cat.lineStyle(1, 15132390, 100);
+    cat.removeMovieClip  ();
+    createEmptyMovieClip ("cat", k++);
+    cat.lineStyle        (1, 15132390, 100);
     
 	// Get percentage of loaded bytes
 	loaded       = _root.getBytesLoaded();
@@ -66,9 +66,7 @@ onEnterFrame = function() {
 	// Display
     perDisp = framesLoaded + "%";
 
-	// `for (let i = 0; i < 25; i++) {}`
-    i = 0;
-	while(i < 25) {
+    for (i = 0; i < 25; i++) {
         if (framesLoaded >= i * 4) {
 			// 
             _root["b" + i]._alpha -= 0.08 * ((_root["b" + i]._alpha -                  100) / 2);
@@ -84,49 +82,42 @@ onEnterFrame = function() {
 		// If the mouse if over one of these "b" frames
 		if (_root["b" + i].hitTest(_xmouse, _ymouse)) {
             if (_xmouse - _root["b" + i]._x > 0) {
-				// for (let t = 0; t < 25; t++) { }
-
-				
-                t = 0;
-                while(t < 25) {
+                for (t = 0; t < 25; t++) {
                     _root["b" + (i - t)]._x -= base / (t + 1);
                     _root["b" + (i + t)]._x -= base / (t + 1);
                     t++;
                 }
             } else if(_xmouse - _root["b" + i]._x <= 0) {
-                t = 0;
-                while(t < 25) {
+                for (t = 0; t < 25; t++) {
                     _root["b" + (i - t)]._x += base / (t + 1);
                     _root["b" + (i + t)]._x += base / (t + 1);
                     t++;
                 }
             }
-            if(_ymouse - _root["b" + i]._y > 0) {
-                t = 0;
-                while(t < 25) {
+
+            if (_ymouse - _root["b" + i]._y > 0) {
+                for (t = 0; t < 25; t++) {
                     _root["b" + (i - t)]._y -= base / (t + 1);
                     _root["b" + (i + t)]._y -= base / (t + 1);
                     t++;
                 }
             } else if(_ymouse - _root["b" + i]._y <= 0) {
-                t = 0;
-                while(t < 25) {
+                for (t = 0; t < 25; t++) {
                     _root["b" + (i - t)]._y += base / (t + 1);
                     _root["b" + (i + t)]._y += base / (t + 1);
                     t++;
                 }
             }
         }
-        i++;
     }
 };
-i = 0;
-while(i < 25) {
-    _root["b" + i].mainX = _root["b" + i]._x;
-    _root["b" + i].mainY = _root["b" + i]._y;
-    _root["b" + i]._x = random(Stage.width);
-    _root["b" + i]._y = random(Stage.height);
+
+for (i = 0; i < 25; i++) {
+    _root["b" + i].mainX  = _root["b" + i]._x;
+    _root["b" + i].mainY  = _root["b" + i]._y;
+    _root["b" + i]._x     = random(Stage.width );
+    _root["b" + i]._y     = random(Stage.height);
     _root["b" + i]._alpha = 0;
-    _root["b" + i].act = true;
+    _root["b" + i].act    = true;
     i++;
 }

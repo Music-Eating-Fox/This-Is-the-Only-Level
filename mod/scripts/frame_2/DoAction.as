@@ -1,96 +1,132 @@
+////////////////////////////////////////////////////////////////
+//															  //
+//							FRAME 2							  //
+//					   (Initialization)						  //
+//															  //
+////////////////////////////////////////////////////////////////
+
+/**
+ * Saves the game data.
+ */
 function saveGame() {
-    savefile.data.deaths = deaths;
-    savefile.data.seconds = seconds;
+    savefile.data.deaths      = deaths;
+    savefile.data.seconds     = seconds;
     savefile.data.miliSeconds = miliSeconds;
-    savefile.data.minutes = minutes;
-    savefile.data.level = level;
-    savefile.data.saved = true;
+    savefile.data.minutes     = minutes;
+    savefile.data.level       = level;
+    savefile.data.saved       = true;
+
     savefile.flush();
-    trace("Game Saved!");
+    
+	trace("Game Saved!");
     trace("deaths: " + savefile.data.deaths);
-    trace("level: " + savefile.data.level);
+    trace("level: "  + savefile.data.level );
 }
+
+/**
+ * Loads saved game data.
+ */
 function loadGame() {
-    deaths = savefile.data.deaths;
-    seconds = savefile.data.seconds;
+    deaths      = savefile.data.deaths;
+    seconds     = savefile.data.seconds;
     miliSeconds = savefile.data.miliSeconds;
-    minutes = savefile.data.minutes;
-    level = savefile.data.level;
-    if(level == 14) {
+    minutes     = savefile.data.minutes;
+    level       = savefile.data.level;
+
+    if (level == 14) {
         trace("RELOADED 14!");
         reloadFourteen = true;
     } else {
         reloadFourteen = false;
     }
+
     trace("Game Loaded!");
     trace("deaths: " + deaths);
-    trace("level: " + level);
+    trace("level: "  + level);
 }
+
+/**
+ * Creates a new save file.
+ */
 function newData() {
     trace("NEW DATA!");
-    deaths = 0;
-    seconds = 0;
+    deaths      = 0;
+    seconds     = 0;
     miliSeconds = 0;
-    minutes = 0;
-    level = 0;
+    minutes     = 0;
+    level       = 0;
     saveGame();
 }
+
+/**
+ * Sets `onEnterFrame` to `null`; removes all movie clips.
+ */
 function killSwitch() {
     onEnterFrame = null;
-    for(var _loc2_ in _root) {
-        if(typeof _root[_loc2_] == "movieclip") {
+    for (var _loc2_ in _root) {
+        if (typeof _root[_loc2_] == "movieclip") {
             _root[_loc2_].removeMovieClip();
         }
     }
 }
+
+/**
+ * Stops the current level and loads the menu screen
+ */
 function gotoMenu() {
     killSwitch();
     gotoAndStop("menu");
 }
-var level = 0;
-var deaths = 0;
-var seconds = 0;
-var miliSeconds = 0;
-var minutes = 0;
-var reloadFourteen = false;
-var frameTime = 2.5;
+
+var level                = 0;
+var deaths               = 0;
+var seconds              = 0;
+var miliSeconds          = 0;
+var minutes              = 0;
+var reloadFourteen       = false;
+var frameTime            = 2.5;
 var pressedCreditsButton = false;
-var stageHints = new Array();
-stageHints.push("Arrow keys required");
-stageHints.push("Not always straight forward");
-stageHints.push("Think before doing");
-stageHints.push("Alternate control scheme");
-stageHints.push("Freefloating");
-stageHints.push("A bit bouncy here");
-stageHints.push("Dull appearances");
-stageHints.push("Candy stripes of doom");
-stageHints.push("Arrow control");
-stageHints.push("Heavy headwind, here");
-stageHints.push("No returns, no refunds");
-stageHints.push("Stay low");
-stageHints.push("Left Right March");
-stageHints.push("One Leap of Faith");
-stageHints.push("Time to refresh");
-stageHints.push("Keep hitting it");
-stageHints.push("Worried about nothing");
-stageHints.push("Collapse");
-stageHints.push("Stuttering");
-stageHints.push("Do you remember?");
-stageHints.push("Inbetween gravitii");
-stageHints.push("Mime\'s folly");
-stageHints.push("Center keyboarder");
-stageHints.push("UPPERCASE");
-stageHints.push("When it feels like it");
-stageHints.push("Or is it");
-stageHints.push("Credit page");
-stageHints.push("Oh ho, so close");
-stageHints.push("Closing shop");
-stageHints.push("No sweat.");
+var stageHints           = [
+	"Arrow keys required",
+	"Not always straight forward",
+	"Think before doing",
+	"Alternate control scheme",
+	"Freefloating",
+	"A bit bouncy here",
+	"Dull appearances",
+	"Candy stripes of doom",
+	"Arrow control",
+	"Heavy headwind, here",
+	"No returns, no refunds",
+	"Stay low",
+	"Left Right March",
+	"One Leap of Faith",
+	"Time to refresh",
+	"Keep hitting it",
+	"Worried about nothing",
+	"Collapse",
+	"Stuttering",
+	"Do you remember?",
+	"Inbetween gravitii",
+	"Mime\'s folly",
+	"Center keyboarder",
+	"UPPERCASE",
+	"When it feels like it",
+	"Or is it",
+	"Credit page",
+	"Oh ho, so close",
+	"Closing shop",
+	"No sweat.",
+];
+
 var savefile = SharedObject.getLocal("finalLevel");
-if(savefile.data.saved != true || savefile.data.saved == undefined) {
+
+// If save file doesn't exist and needs to be saved, create new save file.
+if (savefile.data.saved != true || savefile.data.saved == undefined) {
     trace("Can\'t find new data.");
     newData();
 } else {
     loadGame();
 }
+
 stop();
